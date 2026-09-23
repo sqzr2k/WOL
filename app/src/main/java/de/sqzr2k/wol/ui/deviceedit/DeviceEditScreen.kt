@@ -42,8 +42,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import de.sqzr2k.wol.R
 import de.sqzr2k.wol.data.local.DeviceEntity
 import de.sqzr2k.wol.data.local.GroupEntity
 import de.sqzr2k.wol.domain.wol.MacAddress
@@ -91,27 +93,27 @@ fun DeviceEditScreen(
     ) {
         item {
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                OutlinedButton(onClick = onScan) { Text("Im Netzwerk suchen") }
+                OutlinedButton(onClick = onScan) { Text(stringResource(R.string.search_network)) }
             }
         }
-        item { OutlinedTextField(name, { name = it }, label = { Text("Gerätename *") }, isError = attempted && name.isBlank(), singleLine = true, modifier = Modifier.fillMaxWidth()) }
+        item { OutlinedTextField(name, { name = it }, label = { Text(stringResource(R.string.device_name_required)) }, isError = attempted && name.isBlank(), singleLine = true, modifier = Modifier.fillMaxWidth()) }
         item {
             OutlinedTextField(
-                mac, { mac = it }, label = { Text("MAC-Adresse *") },
-                supportingText = { if (attempted && normalizedMac == null) Text("Beispiel: 02:00:00:00:00:01") },
+                mac, { mac = it }, label = { Text(stringResource(R.string.mac_address_required)) },
+                supportingText = { if (attempted && normalizedMac == null) Text(stringResource(R.string.mac_address_example)) },
                 isError = attempted && normalizedMac == null, singleLine = true, modifier = Modifier.fillMaxWidth(),
             )
         }
         item {
             ExposedDropdownMenuBox(expanded = groupExpanded, onExpandedChange = { groupExpanded = it }) {
                 OutlinedTextField(
-                    value = groups.firstOrNull { it.id == groupId }?.name ?: "Keine Gruppe",
-                    onValueChange = {}, readOnly = true, label = { Text("Gruppe") },
+                    value = groups.firstOrNull { it.id == groupId }?.name ?: stringResource(R.string.no_group),
+                    onValueChange = {}, readOnly = true, label = { Text(stringResource(R.string.group)) },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(groupExpanded) },
                     modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable).fillMaxWidth(),
                 )
                 ExposedDropdownMenu(expanded = groupExpanded, onDismissRequest = { groupExpanded = false }) {
-                    DropdownMenuItem({ Text("Keine Gruppe") }, onClick = { groupId = null; groupExpanded = false })
+                    DropdownMenuItem({ Text(stringResource(R.string.no_group)) }, onClick = { groupId = null; groupExpanded = false })
                     groups.forEach { group ->
                         DropdownMenuItem({ Text(group.name) }, onClick = { groupId = group.id; groupExpanded = false })
                     }
@@ -119,7 +121,7 @@ fun DeviceEditScreen(
             }
         }
         item {
-            Text("Farbe", style = MaterialTheme.typography.labelLarge)
+            Text(stringResource(R.string.color), style = MaterialTheme.typography.labelLarge)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(14.dp), modifier = Modifier.padding(top = 8.dp)) {
                 palette.forEach { value ->
                     Box(
@@ -128,44 +130,44 @@ fun DeviceEditScreen(
                 }
             }
         }
-        item { HorizontalDivider(); Text("Netzwerk", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp)) }
-        item { OutlinedTextField(hostname, { hostname = it }, label = { Text("Hostname des Zielgeräts") }, singleLine = true, modifier = Modifier.fillMaxWidth()) }
-        item { OutlinedTextField(deviceIp, { deviceIp = it }, label = { Text("Geräte-IP") }, singleLine = true, modifier = Modifier.fillMaxWidth()) }
+        item { HorizontalDivider(); Text(stringResource(R.string.network), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp)) }
+        item { OutlinedTextField(hostname, { hostname = it }, label = { Text(stringResource(R.string.target_device_hostname)) }, singleLine = true, modifier = Modifier.fillMaxWidth()) }
+        item { OutlinedTextField(deviceIp, { deviceIp = it }, label = { Text(stringResource(R.string.device_ip)) }, singleLine = true, modifier = Modifier.fillMaxWidth()) }
         item {
             OutlinedTextField(
-                broadcast, { broadcast = it }, label = { Text("WOL-Zieladresse") },
-                supportingText = { Text("Hostname, IP- oder Broadcast-Adresse") },
+                broadcast, { broadcast = it }, label = { Text(stringResource(R.string.wol_target_address)) },
+                supportingText = { Text(stringResource(R.string.target_address_hint)) },
                 singleLine = true, modifier = Modifier.fillMaxWidth(),
             )
         }
         item {
             OutlinedTextField(
-                port, { port = it.filter(Char::isDigit) }, label = { Text("UDP-Port") }, isError = attempted && !validPort,
+                port, { port = it.filter(Char::isDigit) }, label = { Text(stringResource(R.string.udp_port)) }, isError = attempted && !validPort,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), singleLine = true, modifier = Modifier.fillMaxWidth(),
             )
         }
         item {
             OutlinedTextField(
-                secureOn, { secureOn = it }, label = { Text("SecureOn-Passwort") },
-                supportingText = { Text("Optional: 6 Byte als Hex/MAC-Format") }, isError = attempted && !validSecureOn,
+                secureOn, { secureOn = it }, label = { Text(stringResource(R.string.secureon_password)) },
+                supportingText = { Text(stringResource(R.string.secureon_hint)) }, isError = attempted && !validSecureOn,
                 singleLine = true, modifier = Modifier.fillMaxWidth(),
             )
         }
-        item { OutlinedTextField(wifiSsid, { wifiSsid = it }, label = { Text("WLAN / SSID") }, singleLine = true, modifier = Modifier.fillMaxWidth()) }
-        item { HorizontalDivider(); Text("Onlinestatus", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp)) }
-        item { SettingSwitch("Reachability/Ping prüfen", pingCheck, { pingCheck = it }) }
+        item { OutlinedTextField(wifiSsid, { wifiSsid = it }, label = { Text(stringResource(R.string.wifi_ssid)) }, singleLine = true, modifier = Modifier.fillMaxWidth()) }
+        item { HorizontalDivider(); Text(stringResource(R.string.online_status), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp)) }
+        item { SettingSwitch(stringResource(R.string.check_reachability), pingCheck, { pingCheck = it }) }
         item {
             OutlinedTextField(
-                manualPort, { manualPort = it.filter(Char::isDigit) }, label = { Text("Manueller TCP-Port") },
-                supportingText = { Text("Optional; zusätzlich zu den globalen Ports") }, isError = attempted && !validManualPort,
+                manualPort, { manualPort = it.filter(Char::isDigit) }, label = { Text(stringResource(R.string.manual_tcp_port)) },
+                supportingText = { Text(stringResource(R.string.manual_tcp_port_hint)) }, isError = attempted && !validManualPort,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), singleLine = true, modifier = Modifier.fillMaxWidth(),
             )
         }
         item {
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
-                    Text("NetBIOS-Prüfung")
-                    Text("In dieser Version nicht verfügbar", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.netbios_check))
+                    Text(stringResource(R.string.not_available_in_version), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
                 Checkbox(checked = false, onCheckedChange = null, enabled = false)
             }
@@ -186,18 +188,18 @@ fun DeviceEditScreen(
                     )
                 },
                 modifier = Modifier.fillMaxWidth(),
-            ) { Text("Speichern") }
+            ) { Text(stringResource(R.string.save)) }
         }
         if (existing != null) {
-            item { OutlinedButton({ deleteConfirm = true }, Modifier.fillMaxWidth()) { Text("Gerät löschen") } }
+            item { OutlinedButton({ deleteConfirm = true }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.delete_device)) } }
         }
     }
     if (deleteConfirm && existing != null) {
         AlertDialog(
-            onDismissRequest = { deleteConfirm = false }, title = { Text("Gerät löschen?") },
-            text = { Text("${existing.name} wird dauerhaft aus der lokalen Geräteliste entfernt.") },
-            confirmButton = { TextButton({ deleteConfirm = false; onDelete(existing) }) { Text("Löschen") } },
-            dismissButton = { TextButton({ deleteConfirm = false }) { Text("Abbrechen") } },
+            onDismissRequest = { deleteConfirm = false }, title = { Text(stringResource(R.string.delete_device_title)) },
+            text = { Text(stringResource(R.string.delete_device_message, existing.name)) },
+            confirmButton = { TextButton({ deleteConfirm = false; onDelete(existing) }) { Text(stringResource(R.string.delete)) } },
+            dismissButton = { TextButton({ deleteConfirm = false }) { Text(stringResource(R.string.cancel)) } },
         )
     }
 }
@@ -220,22 +222,22 @@ fun ScanScreen(
 ) {
     Column(Modifier.fillMaxSize()) {
         Row(Modifier.fillMaxWidth().padding(16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
-            if (progress == null) Button(onClick = onStart) { Text(if (results.isEmpty()) "Scan starten" else "Erneut scannen") }
+            if (progress == null) Button(onClick = onStart) { Text(stringResource(if (results.isEmpty()) R.string.start_scan else R.string.scan_again)) }
             else {
-                OutlinedButton(onClick = onCancel) { Text("Abbrechen") }
+                OutlinedButton(onClick = onCancel) { Text(stringResource(R.string.cancel)) }
                 CircularProgressIndicator(Modifier.size(24.dp))
-                Text("$progress / 254")
+                Text(stringResource(R.string.scan_progress, progress))
             }
         }
         if (results.isEmpty() && progress == null) {
-            Text("Der Scan prüft das lokale IPv4-/24-Netz. MAC-Adressen sind auf aktuellen Android-Versionen häufig nicht zugänglich.", Modifier.padding(16.dp))
+            Text(stringResource(R.string.scan_description), Modifier.padding(16.dp))
         }
         LazyColumn(Modifier.fillMaxSize()) {
             items(results, key = { it.ipAddress }) { result ->
                 Column(Modifier.fillMaxWidth().clickable { onSelect(result) }.padding(16.dp)) {
-                    Text(result.hostname?.let { "$it (${result.ipAddress})" } ?: result.ipAddress, style = MaterialTheme.typography.titleSmall)
-                    Text(result.macAddress ?: "MAC-Adresse nicht gefunden", color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    Text("${result.latencyMs} ms", style = MaterialTheme.typography.labelSmall)
+                    Text(result.hostname?.let { stringResource(R.string.scan_result_hostname, it, result.ipAddress) } ?: result.ipAddress, style = MaterialTheme.typography.titleSmall)
+                    Text(result.macAddress ?: stringResource(R.string.mac_address_not_found), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.latency_milliseconds, result.latencyMs), style = MaterialTheme.typography.labelSmall)
                 }
                 HorizontalDivider()
             }

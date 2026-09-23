@@ -1,3 +1,127 @@
 <resources>
-    <string name="app_name">WOL</string>
+    <string name="app_name" translatable="false">WOL</string>
+    <string name="project_url" translatable="false">https://github.com/sqzr2k/WOL</string>
+
+    <string name="nav_all_devices">All devices</string>
+    <string name="nav_groups">Groups</string>
+    <string name="nav_manage_groups">Manage groups</string>
+    <string name="nav_import_export">Import / Export</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_about">About WOL</string>
+
+    <string name="title_devices">Devices</string>
+    <string name="title_add_device">Add device</string>
+    <string name="title_edit_device">Edit device</string>
+    <string name="title_find_device">Find device</string>
+    <string name="title_groups">Groups</string>
+    <string name="title_import_export">Import / Export</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_about">About WOL</string>
+
+    <string name="no_devices_title">No devices yet</string>
+    <string name="no_devices_message">Add your first device using +.</string>
+    <string name="no_group">No group</string>
+    <string name="add_device">Add device</string>
+    <string name="wake">Wake</string>
+    <string name="device_id">#%1$d\u0020\u0020</string>
+    <string name="latency_milliseconds">%1$d ms</string>
+    <string name="status_checking">…</string>
+
+    <string name="search_network">Search network</string>
+    <string name="device_name_required">Device name *</string>
+    <string name="mac_address_required">MAC address *</string>
+    <string name="mac_address_example">Example: 02:00:00:00:00:01</string>
+    <string name="group">Group</string>
+    <string name="color">Color</string>
+    <string name="network">Network</string>
+    <string name="target_device_hostname">Target device hostname</string>
+    <string name="device_ip">Device IP</string>
+    <string name="wol_target_address">WOL target address</string>
+    <string name="target_address_hint">Hostname, IP, or broadcast address</string>
+    <string name="udp_port">UDP port</string>
+    <string name="secureon_password">SecureOn password</string>
+    <string name="secureon_hint">Optional: 6 bytes in hex/MAC format</string>
+    <string name="wifi_ssid">Wi-Fi / SSID</string>
+    <string name="online_status">Online status</string>
+    <string name="check_reachability">Check reachability/ping</string>
+    <string name="manual_tcp_port">Manual TCP port</string>
+    <string name="manual_tcp_port_hint">Optional; in addition to the global ports</string>
+    <string name="netbios_check">NetBIOS check</string>
+    <string name="not_available_in_version">Not available in this version</string>
+    <string name="save">Save</string>
+    <string name="delete_device">Delete device</string>
+    <string name="delete_device_title">Delete device?</string>
+    <string name="delete_device_message">%1$s will be permanently removed from the local device list.</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="start_scan">Start scan</string>
+    <string name="scan_again">Scan again</string>
+    <string name="scan_progress">%1$d / 254</string>
+    <string name="scan_description">The scan checks the local IPv4 /24 network. MAC addresses are often unavailable on current Android versions.</string>
+    <string name="scan_result_hostname">%1$s (%2$s)</string>
+    <string name="mac_address_not_found">MAC address not found</string>
+
+    <string name="new_group">New group</string>
+    <string name="add">Add</string>
+    <string name="no_groups">No groups yet.</string>
+    <string name="rename">Rename</string>
+    <string name="rename_group_title">Rename group</string>
+    <string name="delete_group_title">Delete group?</string>
+    <string name="delete_group_message">Devices will be kept and assigned to “No group”.</string>
+
+    <string name="csv_import_export">CSV import/export</string>
+    <string name="csv_description">Importing a CSV file can replace existing data. Export creates a UTF-8 CSV file that can be saved or shared using the Android file picker.</string>
+    <string name="import_csv">Import CSV file</string>
+    <string name="export_csv">Export CSV file</string>
+    <string name="no_storage_permission">No broad storage permissions are required.</string>
+    <string name="replace_data_title">Replace existing data?</string>
+    <plurals name="validated_group_count">
+        <item quantity="one">%1$d group</item>
+        <item quantity="other">%1$d groups</item>
+    </plurals>
+    <plurals name="replace_data_message">
+        <item quantity="one">%1$d device and %2$s were validated. Continuing will replace the current data transactionally.</item>
+        <item quantity="other">%1$d devices and %2$s were validated. Continuing will replace the current data transactionally.</item>
+    </plurals>
+    <string name="import_action">Import</string>
+    <string name="file_processing_title">File could not be processed</string>
+    <string name="file_read_failed">The selected file could not be opened.</string>
+    <string name="file_write_failed">The selected file could not be written.</string>
+    <string name="csv_invalid">The CSV file is invalid or uses an unsupported format.</string>
+    <string name="ok">OK</string>
+
+    <string name="settings_general">General</string>
+    <string name="wol_packet_count">WOL packet count</string>
+    <string name="packet_count_hint">1 to 10; default: 3</string>
+    <string name="settings_device_list">Device list</string>
+    <string name="show_id_numbers">Show ID numbers</string>
+    <string name="compact_mode">Compact mode</string>
+    <string name="online_refresh_seconds">Online status refresh (seconds)</string>
+    <string name="global_tcp_ports">Global TCP ports</string>
+    <string name="global_tcp_ports_hint">Comma-separated, for example 22,80,443,3389,445</string>
+    <string name="appearance">Appearance</string>
+    <string name="theme_system">System</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="dynamic_colors">Dynamic colors</string>
+    <string name="save_settings">Save settings</string>
+
+    <string name="about_version">Version %1$s</string>
+    <string name="about_description">A small, independent FOSS app for sending Wake-on-LAN packets.</string>
+    <string name="project_on_github">Project on GitHub</string>
+    <string name="about_privacy_summary">No accounts · No cloud · No ads · No telemetry</string>
+    <string name="about_local_data">All devices, groups, and settings remain locally on this device. Network traffic is generated only by explicitly triggered wake packets, local status checks, and LAN scans.</string>
+    <string name="about_license">License: Mozilla Public License 2.0</string>
+
+    <string name="message_device_save_failed">Device could not be saved.</string>
+    <string name="message_device_delete_failed">Device could not be deleted.</string>
+    <string name="message_group_add_failed">The group already exists or could not be created.</string>
+    <string name="message_group_rename_failed">Group could not be renamed.</string>
+    <string name="message_group_delete_failed">Group could not be deleted.</string>
+    <string name="message_wake_sent">Wake packet sent to %1$s.</string>
+    <string name="message_wake_failed">Wake packet could not be sent to %1$s.</string>
+    <string name="message_csv_imported">CSV data imported.</string>
+    <string name="message_csv_import_failed">Import failed; existing data was not changed.</string>
+    <string name="message_scan_cancelled">Network scan cancelled.</string>
+    <string name="message_scan_failed">Network scan failed.</string>
 </resources>

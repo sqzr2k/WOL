@@ -28,8 +28,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import de.sqzr2k.wol.R
 import de.sqzr2k.wol.data.local.DeviceEntity
 import de.sqzr2k.wol.data.local.GroupEntity
 import de.sqzr2k.wol.data.settings.AppSettings
@@ -56,9 +58,9 @@ fun DevicesScreen(
                 Modifier.align(Alignment.Center).padding(32.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text("Noch keine Geräte", style = MaterialTheme.typography.titleMedium)
+                Text(stringResource(R.string.no_devices_title), style = MaterialTheme.typography.titleMedium)
                 Spacer(Modifier.height(8.dp))
-                Text("Füge mit + deinen ersten Rechner hinzu.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.no_devices_message), color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         } else {
             LazyColumn(Modifier.fillMaxSize(), contentPadding = androidx.compose.foundation.layout.PaddingValues(bottom = 88.dp)) {
@@ -69,7 +71,7 @@ fun DevicesScreen(
                     val groupDevices = grouped[groupId].orEmpty()
                     item(key = "header-$groupId") {
                         GroupHeader(
-                            name = groupId?.let { groupMap[it]?.name } ?: "Ohne Gruppe",
+                            name = groupId?.let { groupMap[it]?.name } ?: stringResource(R.string.no_group),
                             canWake = groupDevices.isNotEmpty(),
                             onWake = { onWakeGroup(groupId) },
                         )
@@ -88,7 +90,7 @@ fun DevicesScreen(
             }
         }
         FloatingActionButton(onClick = onAdd, modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp)) {
-            Icon(Icons.Default.Add, contentDescription = "Gerät hinzufügen")
+            Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_device))
         }
     }
 }
@@ -100,7 +102,7 @@ private fun GroupHeader(name: String, canWake: Boolean, onWake: () -> Unit) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
-        Button(onClick = onWake, enabled = canWake) { Text("Wecken") }
+        Button(onClick = onWake, enabled = canWake) { Text(stringResource(R.string.wake)) }
     }
 }
 
@@ -127,15 +129,15 @@ private fun DeviceRow(
             Box(Modifier.size(14.dp).background(Color(device.color), CircleShape))
             Column(Modifier.weight(1f)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    if (showId) Text("#${device.id}  ", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    if (showId) Text(stringResource(R.string.device_id, device.id), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     Text(device.name, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Medium)
                 }
                 Text(device.macAddress, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             Column(horizontalAlignment = Alignment.End) {
                 Box(Modifier.size(10.dp).background(statusColor(status), CircleShape))
-                if (status is OnlineState.Online) Text("${status.latencyMs} ms", style = MaterialTheme.typography.labelSmall)
-                if (status is OnlineState.Checking) Text("…", style = MaterialTheme.typography.labelSmall)
+                if (status is OnlineState.Online) Text(stringResource(R.string.latency_milliseconds, status.latencyMs), style = MaterialTheme.typography.labelSmall)
+                if (status is OnlineState.Checking) Text(stringResource(R.string.status_checking), style = MaterialTheme.typography.labelSmall)
             }
         }
     }

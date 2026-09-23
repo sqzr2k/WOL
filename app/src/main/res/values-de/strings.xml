@@ -1,0 +1,124 @@
+<resources>
+    <string name="nav_all_devices">Alle Geräte</string>
+    <string name="nav_groups">Gruppen</string>
+    <string name="nav_manage_groups">Gruppen verwalten</string>
+    <string name="nav_import_export">Import / Export</string>
+    <string name="nav_settings">Einstellungen</string>
+    <string name="nav_about">Über WOL</string>
+
+    <string name="title_devices">Geräte</string>
+    <string name="title_add_device">Gerät hinzufügen</string>
+    <string name="title_edit_device">Gerät bearbeiten</string>
+    <string name="title_find_device">Gerät finden</string>
+    <string name="title_groups">Gruppen</string>
+    <string name="title_import_export">Import / Export</string>
+    <string name="title_settings">Einstellungen</string>
+    <string name="title_about">Über WOL</string>
+
+    <string name="no_devices_title">Noch keine Geräte</string>
+    <string name="no_devices_message">Füge mit + dein erstes Gerät hinzu.</string>
+    <string name="no_group">Ohne Gruppe</string>
+    <string name="add_device">Gerät hinzufügen</string>
+    <string name="wake">Wecken</string>
+    <string name="device_id">#%1$d\u0020\u0020</string>
+    <string name="latency_milliseconds">%1$d ms</string>
+    <string name="status_checking">…</string>
+
+    <string name="search_network">Im Netzwerk suchen</string>
+    <string name="device_name_required">Gerätename *</string>
+    <string name="mac_address_required">MAC-Adresse *</string>
+    <string name="mac_address_example">Beispiel: 02:00:00:00:00:01</string>
+    <string name="group">Gruppe</string>
+    <string name="color">Farbe</string>
+    <string name="network">Netzwerk</string>
+    <string name="target_device_hostname">Hostname des Zielgeräts</string>
+    <string name="device_ip">Geräte-IP</string>
+    <string name="wol_target_address">WOL-Zieladresse</string>
+    <string name="target_address_hint">Hostname, IP- oder Broadcast-Adresse</string>
+    <string name="udp_port">UDP-Port</string>
+    <string name="secureon_password">SecureOn-Passwort</string>
+    <string name="secureon_hint">Optional: 6 Byte als Hex/MAC-Format</string>
+    <string name="wifi_ssid">WLAN / SSID</string>
+    <string name="online_status">Onlinestatus</string>
+    <string name="check_reachability">Reachability/Ping prüfen</string>
+    <string name="manual_tcp_port">Manueller TCP-Port</string>
+    <string name="manual_tcp_port_hint">Optional; zusätzlich zu den globalen Ports</string>
+    <string name="netbios_check">NetBIOS-Prüfung</string>
+    <string name="not_available_in_version">In dieser Version nicht verfügbar</string>
+    <string name="save">Speichern</string>
+    <string name="delete_device">Gerät löschen</string>
+    <string name="delete_device_title">Gerät löschen?</string>
+    <string name="delete_device_message">%1$s wird dauerhaft aus der lokalen Geräteliste entfernt.</string>
+    <string name="delete">Löschen</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="start_scan">Scan starten</string>
+    <string name="scan_again">Erneut scannen</string>
+    <string name="scan_progress">%1$d / 254</string>
+    <string name="scan_description">Der Scan prüft das lokale IPv4-/24-Netz. MAC-Adressen sind auf aktuellen Android-Versionen häufig nicht zugänglich.</string>
+    <string name="scan_result_hostname">%1$s (%2$s)</string>
+    <string name="mac_address_not_found">MAC-Adresse nicht gefunden</string>
+
+    <string name="new_group">Neue Gruppe</string>
+    <string name="add">Hinzufügen</string>
+    <string name="no_groups">Noch keine Gruppen angelegt.</string>
+    <string name="rename">Umbenennen</string>
+    <string name="rename_group_title">Gruppe umbenennen</string>
+    <string name="delete_group_title">Gruppe löschen?</string>
+    <string name="delete_group_message">Geräte bleiben erhalten und werden „Ohne Gruppe“ zugeordnet.</string>
+
+    <string name="csv_import_export">CSV-Import/Export</string>
+    <string name="csv_description">Der Import einer CSV-Datei kann bestehende Daten ersetzen. Der Export erstellt eine UTF-8-CSV-Datei, die über den Android-Dateidialog gespeichert oder geteilt werden kann.</string>
+    <string name="import_csv">CSV-Datei importieren</string>
+    <string name="export_csv">CSV-Datei exportieren</string>
+    <string name="no_storage_permission">Es werden keine pauschalen Speicherberechtigungen benötigt.</string>
+    <string name="replace_data_title">Bestehende Daten ersetzen?</string>
+    <plurals name="validated_group_count">
+        <item quantity="one">%1$d Gruppe</item>
+        <item quantity="other">%1$d Gruppen</item>
+    </plurals>
+    <plurals name="replace_data_message">
+        <item quantity="one">%1$d Gerät und %2$s wurden validiert. Beim Fortfahren werden die aktuellen Daten transaktional ersetzt.</item>
+        <item quantity="other">%1$d Geräte und %2$s wurden validiert. Beim Fortfahren werden die aktuellen Daten transaktional ersetzt.</item>
+    </plurals>
+    <string name="import_action">Importieren</string>
+    <string name="file_processing_title">Datei konnte nicht verarbeitet werden</string>
+    <string name="file_read_failed">Die ausgewählte Datei konnte nicht geöffnet werden.</string>
+    <string name="file_write_failed">Die ausgewählte Datei konnte nicht geschrieben werden.</string>
+    <string name="csv_invalid">Die CSV-Datei ist ungültig oder verwendet ein nicht unterstütztes Format.</string>
+    <string name="ok">OK</string>
+
+    <string name="settings_general">Allgemein</string>
+    <string name="wol_packet_count">WOL-Paketanzahl</string>
+    <string name="packet_count_hint">1 bis 10; Standard: 3</string>
+    <string name="settings_device_list">Geräteliste</string>
+    <string name="show_id_numbers">ID-Nummern anzeigen</string>
+    <string name="compact_mode">Kompaktmodus</string>
+    <string name="online_refresh_seconds">Onlinestatus-Erneuerung (Sekunden)</string>
+    <string name="global_tcp_ports">Globale TCP-Ports</string>
+    <string name="global_tcp_ports_hint">Kommagetrennt, z. B. 22,80,443,3389,445</string>
+    <string name="appearance">Darstellung</string>
+    <string name="theme_system">System</string>
+    <string name="theme_light">Hell</string>
+    <string name="theme_dark">Dunkel</string>
+    <string name="dynamic_colors">Dynamische Farben</string>
+    <string name="save_settings">Einstellungen speichern</string>
+
+    <string name="about_version">Version %1$s</string>
+    <string name="about_description">Eine kleine, unabhängige FOSS-App zum Senden von Wake-on-LAN-Paketen.</string>
+    <string name="project_on_github">Projekt auf GitHub</string>
+    <string name="about_privacy_summary">Keine Accounts · Keine Cloud · Keine Werbung · Keine Telemetrie</string>
+    <string name="about_local_data">Alle Geräte, Gruppen und Einstellungen bleiben lokal auf diesem Gerät. Netzwerkverkehr entsteht nur durch ausdrücklich ausgelöste Wake-Pakete, lokale Statusprüfungen und LAN-Scans.</string>
+    <string name="about_license">Lizenz: Mozilla Public License 2.0</string>
+
+    <string name="message_device_save_failed">Gerät konnte nicht gespeichert werden.</string>
+    <string name="message_device_delete_failed">Gerät konnte nicht gelöscht werden.</string>
+    <string name="message_group_add_failed">Die Gruppe existiert bereits oder konnte nicht erstellt werden.</string>
+    <string name="message_group_rename_failed">Gruppe konnte nicht umbenannt werden.</string>
+    <string name="message_group_delete_failed">Gruppe konnte nicht gelöscht werden.</string>
+    <string name="message_wake_sent">Wake-Paket an %1$s gesendet.</string>
+    <string name="message_wake_failed">Wake-Paket an %1$s konnte nicht gesendet werden.</string>
+    <string name="message_csv_imported">CSV-Daten importiert.</string>
+    <string name="message_csv_import_failed">Import fehlgeschlagen; vorhandene Daten wurden nicht verändert.</string>
+    <string name="message_scan_cancelled">Netzwerkscan abgebrochen.</string>
+    <string name="message_scan_failed">Netzwerkscan fehlgeschlagen.</string>
+</resources>

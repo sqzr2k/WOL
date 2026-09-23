@@ -4,6 +4,13 @@ Minimalistic open-source Wake-on-LAN app for Android.
 
 WOL manages devices and groups locally and sends configurable IPv4 Wake-on-LAN packets. It supports direct LAN use as well as routed VPN and relay scenarios.
 
+## Languages
+
+- English
+- German
+
+WOL follows the Android system or per-app language. English is the fallback. On Android 13 and newer, the supported app languages are available in the system settings; the app does not provide a separate language selector.
+
 ## Features
 
 - Wake-on-LAN with configurable target address and packet count

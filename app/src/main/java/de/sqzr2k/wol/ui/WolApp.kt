@@ -33,10 +33,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import de.sqzr2k.wol.R
 import de.sqzr2k.wol.network.ScanResult
 import de.sqzr2k.wol.ui.about.AboutScreen
 import de.sqzr2k.wol.ui.deviceedit.DeviceEditScreen
@@ -71,6 +74,7 @@ fun WolApp(viewModel: AppViewModel) {
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     val lifecycleOwner = LocalLifecycleOwner.current
+    val context = LocalContext.current
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -83,7 +87,11 @@ fun WolApp(viewModel: AppViewModel) {
         lifecycleOwner.lifecycle.addObserver(observer)
         onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
     }
-    LaunchedEffect(Unit) { viewModel.messages.collect { snackbarHostState.showSnackbar(it) } }
+    LaunchedEffect(context) {
+        viewModel.messages.collect { message ->
+            snackbarHostState.showSnackbar(context.getString(message.resourceId, *message.args.toTypedArray()))
+        }
+    }
 
     fun navigate(target: AppScreen) {
         screen = target
@@ -99,13 +107,13 @@ fun WolApp(viewModel: AppViewModel) {
             gesturesEnabled = isRoot,
             drawerContent = {
                 ModalDrawerSheet {
-                    Text("WOL", style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(24.dp))
+                    Text(stringResource(R.string.app_name), style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(24.dp))
                     NavigationDrawerItem(
-                        label = { Text("Alle Geräte") },
+                        label = { Text(stringResource(R.string.nav_all_devices)) },
                         selected = screen is AppScreen.Devices && (screen as AppScreen.Devices).groupId == null,
                         onClick = { navigate(AppScreen.Devices()) },
                     )
-                    Text("Gruppen", style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(horizontal = 28.dp, vertical = 8.dp))
+                    Text(stringResource(R.string.nav_groups), style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(horizontal = 28.dp, vertical = 8.dp))
                     groups.forEach { group ->
                         NavigationDrawerItem(
                             label = { Text(group.name) },
@@ -114,10 +122,10 @@ fun WolApp(viewModel: AppViewModel) {
                         )
                     }
                     HorizontalDivider(Modifier.padding(vertical = 8.dp))
-                    NavigationDrawerItem({ Text("Gruppen verwalten") }, screen == AppScreen.Groups, { navigate(AppScreen.Groups) })
-                    NavigationDrawerItem({ Text("Import / Export") }, screen == AppScreen.ImportExport, { navigate(AppScreen.ImportExport) })
-                    NavigationDrawerItem({ Text("Einstellungen") }, screen == AppScreen.Settings, { navigate(AppScreen.Settings) })
-                    NavigationDrawerItem({ Text("Über WOL") }, screen == AppScreen.About, { navigate(AppScreen.About) })
+                    NavigationDrawerItem({ Text(stringResource(R.string.nav_manage_groups)) }, screen == AppScreen.Groups, { navigate(AppScreen.Groups) })
+                    NavigationDrawerItem({ Text(stringResource(R.string.nav_import_export)) }, screen == AppScreen.ImportExport, { navigate(AppScreen.ImportExport) })
+                    NavigationDrawerItem({ Text(stringResource(R.string.nav_settings)) }, screen == AppScreen.Settings, { navigate(AppScreen.Settings) })
+                    NavigationDrawerItem({ Text(stringResource(R.string.nav_about)) }, screen == AppScreen.About, { navigate(AppScreen.About) })
                 }
             },
         ) {
@@ -179,12 +187,13 @@ fun WolApp(viewModel: AppViewModel) {
     }
 }
 
+@Composable
 private fun titleFor(screen: AppScreen, groups: Map<Long, String>): String = when (screen) {
-    is AppScreen.Devices -> screen.groupId?.let(groups::get) ?: "Geräte"
-    is AppScreen.EditDevice -> if (screen.deviceId == null) "Gerät hinzufügen" else "Gerät bearbeiten"
-    AppScreen.Scan -> "Gerät finden"
-    AppScreen.Groups -> "Gruppen"
-    AppScreen.ImportExport -> "Import / Export"
-    AppScreen.Settings -> "Einstellungen"
-    AppScreen.About -> "Über WOL"
+    is AppScreen.Devices -> screen.groupId?.let(groups::get) ?: stringResource(R.string.title_devices)
+    is AppScreen.EditDevice -> stringResource(if (screen.deviceId == null) R.string.title_add_device else R.string.title_edit_device)
+    AppScreen.Scan -> stringResource(R.string.title_find_device)
+    AppScreen.Groups -> stringResource(R.string.title_groups)
+    AppScreen.ImportExport -> stringResource(R.string.title_import_export)
+    AppScreen.Settings -> stringResource(R.string.title_settings)
+    AppScreen.About -> stringResource(R.string.title_about)
 }

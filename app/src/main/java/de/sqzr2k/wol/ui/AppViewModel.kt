@@ -1,9 +1,11 @@
 package de.sqzr2k.wol.ui
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import de.sqzr2k.wol.AppContainer
+import de.sqzr2k.wol.R
 import de.sqzr2k.wol.data.CsvCodec
 import de.sqzr2k.wol.data.CsvSnapshot
 import de.sqzr2k.wol.data.local.DeviceEntity
@@ -25,6 +27,11 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
+data class UiMessage(
+    @param:StringRes val resourceId: Int,
+    val args: List<Any> = emptyList(),
+)
+
 class AppViewModel(private val container: AppContainer) : ViewModel() {
     val devices = container.devices.devices.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
     val groups = container.devices.groups.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
@@ -32,7 +39,7 @@ class AppViewModel(private val container: AppContainer) : ViewModel() {
 
     private val _statuses = MutableStateFlow<Map<Long, OnlineState>>(emptyMap())
     val statuses: StateFlow<Map<Long, OnlineState>> = _statuses.asStateFlow()
-    private val _messages = MutableSharedFlow<String>(extraBufferCapacity = 8)
+    private val _messages = MutableSharedFlow<UiMessage>(extraBufferCapacity = 8)
     val messages = _messages.asSharedFlow()
     private val _foreground = MutableStateFlow(true)
     private var monitorJob: Job? = null
@@ -50,35 +57,35 @@ class AppViewModel(private val container: AppContainer) : ViewModel() {
     fun saveDevice(device: DeviceEntity, onSaved: () -> Unit = {}) = viewModelScope.launch {
         runCatching { container.devices.saveDevice(device) }
             .onSuccess { onSaved() }
-            .onFailure { _messages.emit("Gerät konnte nicht gespeichert werden: ${it.localizedMessage}") }
+            .onFailure { _messages.emit(UiMessage(R.string.message_device_save_failed)) }
     }
 
     fun deleteDevice(device: DeviceEntity, onDeleted: () -> Unit = {}) = viewModelScope.launch {
         runCatching { container.devices.deleteDevice(device) }
             .onSuccess { onDeleted() }
-            .onFailure { _messages.emit("Gerät konnte nicht gelöscht werden") }
+            .onFailure { _messages.emit(UiMessage(R.string.message_device_delete_failed)) }
     }
 
     fun addGroup(name: String) = viewModelScope.launch {
         if (name.isBlank()) return@launch
         runCatching { container.devices.addGroup(name) }
-            .onFailure { _messages.emit("Gruppe existiert bereits oder konnte nicht erstellt werden") }
+            .onFailure { _messages.emit(UiMessage(R.string.message_group_add_failed)) }
     }
 
     fun renameGroup(group: GroupEntity, name: String) = viewModelScope.launch {
         runCatching { container.devices.updateGroup(group.copy(name = name.trim())) }
-            .onFailure { _messages.emit("Gruppe konnte nicht umbenannt werden") }
+            .onFailure { _messages.emit(UiMessage(R.string.message_group_rename_failed)) }
     }
 
     fun deleteGroup(group: GroupEntity) = viewModelScope.launch {
         runCatching { container.devices.deleteGroup(group) }
-            .onFailure { _messages.emit("Gruppe konnte nicht gelöscht werden") }
+            .onFailure { _messages.emit(UiMessage(R.string.message_group_delete_failed)) }
     }
 
     fun wake(device: DeviceEntity) = viewModelScope.launch {
         runCatching { container.wolSender.send(device, settings.value.packetCount) }
-            .onSuccess { _messages.emit("Wake-Paket an ${device.name} gesendet") }
-            .onFailure { _messages.emit("Wake-Paket an ${device.name} konnte nicht gesendet werden") }
+            .onSuccess { _messages.emit(UiMessage(R.string.message_wake_sent, listOf(device.name))) }
+            .onFailure { _messages.emit(UiMessage(R.string.message_wake_failed, listOf(device.name))) }
     }
 
     fun wakeGroup(groupId: Long?) {
@@ -96,8 +103,8 @@ class AppViewModel(private val container: AppContainer) : ViewModel() {
 
     fun importCsv(snapshot: CsvSnapshot, onDone: () -> Unit = {}) = viewModelScope.launch {
         runCatching { container.devices.replaceAll(snapshot.devices, snapshot.groups) }
-            .onSuccess { _messages.emit("CSV-Daten importiert"); onDone() }
-            .onFailure { _messages.emit("Import fehlgeschlagen; vorhandene Daten wurden nicht verändert") }
+            .onSuccess { _messages.emit(UiMessage(R.string.message_csv_imported)); onDone() }
+            .onFailure { _messages.emit(UiMessage(R.string.message_csv_import_failed)) }
     }
 
     fun suggestedBroadcast() = container.lanScanner.currentBroadcastAddress() ?: "255.255.255.255"
@@ -110,9 +117,9 @@ class AppViewModel(private val container: AppContainer) : ViewModel() {
             try {
                 _scanResults.value = container.lanScanner.scan { _scanProgress.value = it }
             } catch (_: CancellationException) {
-                _messages.emit("Netzwerkscan abgebrochen")
-            } catch (error: Exception) {
-                _messages.emit("Netzwerkscan fehlgeschlagen: ${error.localizedMessage}")
+                _messages.emit(UiMessage(R.string.message_scan_cancelled))
+            } catch (_: Exception) {
+                _messages.emit(UiMessage(R.string.message_scan_failed))
             } finally {
                 _scanProgress.value = null
             }

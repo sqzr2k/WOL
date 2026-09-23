@@ -23,8 +23,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import de.sqzr2k.wol.R
 import de.sqzr2k.wol.data.settings.AppSettings
 import de.sqzr2k.wol.data.settings.ThemeMode
 
@@ -36,47 +38,51 @@ fun SettingsScreen(settings: AppSettings, onSave: (AppSettings) -> Unit) {
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        item { SectionTitle("Allgemein") }
+        item { SectionTitle(stringResource(R.string.settings_general)) }
         item {
             OutlinedTextField(
                 edited.packetCount.toString(),
                 { value -> value.toIntOrNull()?.let { edited = edited.copy(packetCount = it.coerceIn(1, 10)) } },
-                label = { Text("WOL Packet Count") }, supportingText = { Text("1 bis 10; Standard: 3") },
+                label = { Text(stringResource(R.string.wol_packet_count)) }, supportingText = { Text(stringResource(R.string.packet_count_hint)) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), singleLine = true, modifier = Modifier.fillMaxWidth(),
             )
         }
-        item { SectionTitle("Geräteliste") }
-        item { Toggle("ID-Nummern anzeigen", edited.showIds) { edited = edited.copy(showIds = it) } }
-        item { Toggle("Kompaktmodus", edited.compactMode) { edited = edited.copy(compactMode = it) } }
+        item { SectionTitle(stringResource(R.string.settings_device_list)) }
+        item { Toggle(stringResource(R.string.show_id_numbers), edited.showIds) { edited = edited.copy(showIds = it) } }
+        item { Toggle(stringResource(R.string.compact_mode), edited.compactMode) { edited = edited.copy(compactMode = it) } }
         item {
             OutlinedTextField(
                 edited.refreshSeconds.toString(),
                 { value -> value.toIntOrNull()?.let { edited = edited.copy(refreshSeconds = it.coerceIn(5, 3600)) } },
-                label = { Text("Onlinestatus-Erneuerung (Sekunden)") },
+                label = { Text(stringResource(R.string.online_refresh_seconds)) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), singleLine = true, modifier = Modifier.fillMaxWidth(),
             )
         }
-        item { SectionTitle("Onlinestatus") }
+        item { SectionTitle(stringResource(R.string.online_status)) }
         item {
             OutlinedTextField(
                 edited.onlinePorts, { edited = edited.copy(onlinePorts = it) },
-                label = { Text("Globale TCP-Ports") }, supportingText = { Text("Kommagetrennt, z. B. 22,80,443,3389,445") },
+                label = { Text(stringResource(R.string.global_tcp_ports)) }, supportingText = { Text(stringResource(R.string.global_tcp_ports_hint)) },
                 singleLine = true, modifier = Modifier.fillMaxWidth(),
             )
         }
-        item { SectionTitle("Darstellung") }
+        item { SectionTitle(stringResource(R.string.appearance)) }
         item {
             Column {
                 ThemeMode.entries.forEach { mode ->
                     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                         RadioButton(edited.themeMode == mode, { edited = edited.copy(themeMode = mode) })
-                        Text(when (mode) { ThemeMode.SYSTEM -> "System"; ThemeMode.LIGHT -> "Hell"; ThemeMode.DARK -> "Dunkel" })
+                        Text(when (mode) {
+                            ThemeMode.SYSTEM -> stringResource(R.string.theme_system)
+                            ThemeMode.LIGHT -> stringResource(R.string.theme_light)
+                            ThemeMode.DARK -> stringResource(R.string.theme_dark)
+                        })
                     }
                 }
             }
         }
-        item { Toggle("Dynamische Farben", edited.dynamicColor) { edited = edited.copy(dynamicColor = it) } }
-        item { Button({ onSave(edited) }, Modifier.fillMaxWidth()) { Text("Einstellungen speichern") } }
+        item { Toggle(stringResource(R.string.dynamic_colors), edited.dynamicColor) { edited = edited.copy(dynamicColor = it) } }
+        item { Button({ onSave(edited) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.save_settings)) } }
     }
 }
 

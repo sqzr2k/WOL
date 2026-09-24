@@ -5,6 +5,23 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
+val releaseSigningEnvironment = mapOf(
+    "storeFile" to System.getenv("WOL_RELEASE_STORE_FILE"),
+    "storePassword" to System.getenv("WOL_RELEASE_STORE_PASSWORD"),
+    "keyAlias" to System.getenv("WOL_RELEASE_KEY_ALIAS"),
+    "keyPassword" to System.getenv("WOL_RELEASE_KEY_PASSWORD"),
+)
+val releaseSigningComplete = releaseSigningEnvironment.values.all { !it.isNullOrBlank() }
+
+gradle.taskGraph.whenReady {
+    if (allTasks.any { it.name.contains("release", ignoreCase = true) } && !releaseSigningComplete) {
+        error(
+            "Release signing requires WOL_RELEASE_STORE_FILE, WOL_RELEASE_STORE_PASSWORD, " +
+                "WOL_RELEASE_KEY_ALIAS, and WOL_RELEASE_KEY_PASSWORD.",
+        )
+    }
+}
+
 android {
     namespace = "de.sqzr2k.wol"
     compileSdk = 36
@@ -15,14 +32,26 @@ android {
         minSdk = 26
         targetSdk = 36
         versionCode = 1
-        versionName = "0.1.0-dev"
+        versionName = "0.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        create("release") {
+            if (releaseSigningComplete) {
+                storeFile = file(checkNotNull(releaseSigningEnvironment["storeFile"]))
+                storePassword = checkNotNull(releaseSigningEnvironment["storePassword"])
+                keyAlias = checkNotNull(releaseSigningEnvironment["keyAlias"])
+                keyPassword = checkNotNull(releaseSigningEnvironment["keyPassword"])
+            }
+        }
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",

@@ -11,6 +11,7 @@ captures/
 *.p12
 *.pfx
 *.pem
+*.key
 *.log
 *.db
 *.sqlite

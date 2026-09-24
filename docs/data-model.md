@@ -1,17 +1,17 @@
-# Datenmodell
+# Data model
 
-## Room, Schema 1
+## Room, schema 1
 
-`DeviceEntity` speichert ID, Name, normalisierte MAC-Adresse, optionale Gruppe/Farbe/Host/IP/Broadcast/SecureOn/SSID, UDP-Port, Prüfschalter, manuellen TCP-Port und Zeitstempel.
+`DeviceEntity` stores the ID, name, normalized MAC address, optional group, color, hostname, device IP, broadcast address, SecureOn password, SSID, UDP port, check flags, manual TCP port, and timestamps.
 
-`GroupEntity` speichert ID, eindeutigen Namen und Sortierreihenfolge. Der Fremdschlüssel eines Geräts verwendet `ON DELETE SET NULL`, sodass beim Löschen einer Gruppe keine Geräte verloren gehen.
+`GroupEntity` stores the ID, unique name, and sort order. A device's foreign key uses `ON DELETE SET NULL`, so deleting a group does not delete any devices.
 
-Room-Schemas werden beim Build in `app/schemas` exportiert und bilden die Grundlage späterer Migrationstests.
+Room schemas are exported to `app/schemas` during the build and provide the basis for future migration tests.
 
 ## DataStore
 
-DataStore Preferences speichert Paketanzahl, Designmodus, dynamische Farben, ID-Anzeige, Kompaktmodus, Statusintervall und globale TCP-Ports.
+DataStore Preferences stores the packet count, theme mode, dynamic color setting, ID display setting, compact mode, online status interval, and global TCP ports.
 
-## Flüchtiger Zustand
+## Transient state
 
-`Unknown`, `Checking`, `Online(latencyMs)` und `Offline` werden nie in Room geschrieben.
+`Unknown`, `Checking`, `Online(latencyMs)`, and `Offline` are never written to Room.

@@ -1,20 +1,20 @@
 # Roadmap
 
-## Abgeschlossener Funktionsumfang
+## Completed feature set
 
-- [x] Geräteverwaltung
-- [x] MAC-Validierung
-- [x] Gruppen
-- [x] Wake-on-LAN mit frei konfigurierbarer Zieladresse, UDP-Port und SecureOn
-- [x] Gemeinsames Wecken
-- [x] Lokales IPv4-WOL
-- [x] WOL über geroutete VPN-Verbindungen und WOL-Relays
-- [x] Online-Status
-- [x] LAN-Scan
-- [x] CSV Import/Export
-- [x] Material-3-Oberfläche mit Hell-, Dunkel- und Systemdesign
-- [x] Kompaktmodus
+- [x] Device management
+- [x] MAC address validation
+- [x] Groups
+- [x] Wake-on-LAN with a configurable target address, UDP port, and SecureOn password
+- [x] Group wake-up
+- [x] Local IPv4 WOL
+- [x] WOL over routed VPN connections and through WOL relays
+- [x] Online status
+- [x] LAN scan
+- [x] CSV import/export
+- [x] Material 3 interface with light, dark, and system themes
+- [x] Compact mode
 
-Die erste benutzbare Version ist funktional abgeschlossen. Der aktuelle Funktionsumfang deckt den vorgesehenen persönlichen Wake-on-LAN-Einsatz ab. Weitere Funktionen werden nur bei konkretem Bedarf ergänzt.
+The current feature set covers the project's intended Wake-on-LAN use cases. Additional features will be considered when there is a concrete need.
 
-Home-Screen-Widgets, Tasker-Integration und Quick-Settings-Tiles gehören bewusst nicht zum vorgesehenen Funktionsumfang.
+Home-screen widgets, Tasker integration, and Quick Settings tiles are not planned.

@@ -1,8 +1,8 @@
 # Engineering Learnings
 
-- Das WOL-Magic-Packet lässt sich zuverlässig ohne externe Bibliothek erzeugen und per UDP an Broadcast-, Unicast- oder Relay-Ziele senden.
-- Für lokale und VPN-basierte Ziele ist nicht die Transportart, sondern die spezifischste passende Android-Network-Route entscheidend; bei uneindeutiger Auswahl bleibt das Systemrouting zuständig.
-- Androids `InetAddress.isReachable()` kann je nach Netzwerk/Hersteller unzuverlässig sein. Deshalb ergänzt WOL den Check um kurze TCP-Verbindungen.
-- Moderne Android-Versionen geben ARP-/MAC-Informationen für fremde LAN-Geräte nicht zuverlässig frei. Scan-Ergebnisse bleiben daher auch ohne MAC-Adresse nutzbar.
-- Ein auf `/24` begrenzter Scan mit Semaphore verhindert 254 gleichzeitig offene Prüfungen und bleibt abbrechbar.
-- CSV wird vollständig geparst und validiert, bevor Room bestehende Daten innerhalb einer Transaktion ersetzt.
+- A WOL Magic Packet can be constructed reliably without an external library and sent over UDP to broadcast, unicast, or relay targets.
+- For local and VPN-based targets, the most-specific matching Android network route matters rather than the transport type; system routing remains in control when the selection is ambiguous.
+- Android's `InetAddress.isReachable()` can be unreliable depending on the network and device vendor. WOL therefore supplements the check with short TCP connection attempts.
+- Current Android versions do not reliably expose ARP or MAC information for other LAN devices. Scan results therefore remain usable even without a MAC address.
+- Limiting the LAN scan to a `/24` network and using a semaphore prevents 254 simultaneous probes while keeping the scan cancellable.
+- CSV data is parsed and validated in full before Room replaces existing data within a transaction.

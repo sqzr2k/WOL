@@ -1,6 +1,6 @@
-# Architektur
+# Architecture
 
-WOL besteht bewusst aus einem einzigen Android-`app`-Modul.
+WOL deliberately uses a single Android `app` module.
 
 ```text
 Compose UI + AppViewModel
@@ -10,14 +10,14 @@ DeviceRepository / SettingsRepository
 Room / DataStore       WolSender / OnlineStatusChecker / LanScanner
 ```
 
-`AppContainer` erzeugt die wenigen langlebigen Abhängigkeiten. Es gibt keine DI-Bibliothek. Die UI beobachtet `Flow`/`StateFlow`; Datenbank- und Netzwerkzugriffe laufen in Coroutines außerhalb des UI-Threads.
+`AppContainer` creates the small set of long-lived dependencies. No dependency injection library is used. The UI observes `Flow`/`StateFlow`; database and network access runs in coroutines outside the UI thread.
 
-Die Navigation ist absichtlich klein und zustandsbasiert. Ein Material-3-Navigation-Drawer enthält die dynamischen Gruppen sowie Gruppenverwaltung, Import/Export, Einstellungen und Info.
+Navigation is intentionally small and state-based. A Material 3 navigation drawer contains the dynamic groups as well as group management, import/export, settings, and about screens.
 
-Der Onlinestatus ist reiner Runtime-State im `AppViewModel`. Prüfungen laufen nur, solange die Activity aktiv ist. Es gibt keinen Hintergrunddienst und keine aggressiven Jobs.
+Online status is kept exclusively as runtime state in `AppViewModel`. Checks run only while the activity is active. There is no background service and no aggressive background work.
 
-## WOL-Routing und Status
+## WOL routing and status
 
-`WolSender` löst die explizit konfigurierte WOL-Zieladresse auf und prüft für die verfügbaren Android-Networks `NetworkCapabilities`, `LinkProperties` und deren Routen. Die spezifischste eindeutig passende Nicht-Default-Route bestimmt das Network; eine pauschale Bevorzugung von VPN oder WLAN gibt es nicht. Bei einer eindeutigen Auswahl bindet `Network.bindSocket()` den UDP-Socket vor dem Versand. Fehlt eine passende Route oder ist die Auswahl uneindeutig, bleibt der Socket ungebunden und Android übernimmt das Systemrouting.
+`WolSender` resolves the explicitly configured WOL target address and inspects `NetworkCapabilities`, `LinkProperties`, and the routes of the available Android networks. The uniquely matching most-specific non-default route determines the network; neither VPN nor Wi-Fi receives blanket priority. When the selection is unambiguous, `Network.bindSocket()` binds the UDP socket before transmission. If no suitable route exists or the selection is ambiguous, the socket remains unbound and Android's system routing takes over.
 
-Die Geräte-IP ist nicht Teil dieses Sendepfads. `OnlineStatusChecker` verwendet sie für die Statusprüfung und fällt nur bei fehlender Geräte-IP auf den Hostnamen des Zielgeräts zurück. Dadurch können Relay-Ziel und überwachtes Endgerät unterschiedliche Adressen besitzen.
+The device IP is not part of this send path. `OnlineStatusChecker` uses it for online status checks and falls back to the target device hostname only when no device IP is configured. This allows the WOL relay target and the monitored end device to use different addresses.

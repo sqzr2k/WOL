@@ -109,6 +109,7 @@
     <string name="about_privacy_summary">Keine Accounts · Keine Cloud · Keine Werbung · Keine Telemetrie</string>
     <string name="about_local_data">Alle Geräte, Gruppen und Einstellungen bleiben lokal auf diesem Gerät. Netzwerkverkehr entsteht nur durch ausdrücklich ausgelöste Wake-Pakete, lokale Statusprüfungen und LAN-Scans.</string>
     <string name="about_license">Lizenz: Mozilla Public License 2.0</string>
+    <string name="support_on_ko_fi">Auf Ko-fi unterstützen</string>
 
     <string name="message_device_save_failed">Gerät konnte nicht gespeichert werden.</string>
     <string name="message_device_delete_failed">Gerät konnte nicht gelöscht werden.</string>

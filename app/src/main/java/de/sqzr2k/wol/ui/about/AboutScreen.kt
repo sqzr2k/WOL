@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -21,6 +22,7 @@ import de.sqzr2k.wol.R
 fun AboutScreen() {
     val uriHandler = LocalUriHandler.current
     val projectUrl = stringResource(R.string.project_url)
+    val koFiUrl = stringResource(R.string.ko_fi_url)
     Column(
         Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp),
@@ -34,5 +36,8 @@ fun AboutScreen() {
         Text(stringResource(R.string.about_privacy_summary), color = MaterialTheme.colorScheme.primary)
         Text(stringResource(R.string.about_local_data))
         Text(stringResource(R.string.about_license))
+        OutlinedButton(onClick = { uriHandler.openUri(koFiUrl) }) {
+            Text(stringResource(R.string.support_on_ko_fi))
+        }
     }
 }

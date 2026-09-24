@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">WOL</string>
     <string name="project_url" translatable="false">https://github.com/sqzr2k/WOL</string>
+    <string name="ko_fi_url" translatable="false">https://ko-fi.com/X0O522RFAM</string>
 
     <string name="nav_all_devices">All devices</string>
     <string name="nav_groups">Groups</string>
@@ -112,6 +113,7 @@
     <string name="about_privacy_summary">No accounts · No cloud · No ads · No telemetry</string>
     <string name="about_local_data">All devices, groups, and settings remain locally on this device. Network traffic is generated only by explicitly triggered wake packets, local status checks, and LAN scans.</string>
     <string name="about_license">License: Mozilla Public License 2.0</string>
+    <string name="support_on_ko_fi">Support on Ko-fi</string>
 
     <string name="message_device_save_failed">Device could not be saved.</string>
     <string name="message_device_delete_failed">Device could not be deleted.</string>
